@@ -12,43 +12,50 @@ import (
 
 func UserLogController(rg *gin.RouterGroup) {
 	rg.GET("/retrieve", RetrieveUserLog)
-	rg.POST("/upload", CreateUserLog)
+	rg.POST("/upload", UploadUserLogs)
 }
 
-// CreateUserLog 添加用户日志
+// UploadUserLogs 添加用户日志
 // @Summary 添加用户日志
 // @Description
 // @Param json body models.PushJson true "json"
 // @Router /user/log/upload [post]
 // @Success 200 object models.ApiResponse
-func CreateUserLog(c *gin.Context) {
+func UploadUserLogs(c *gin.Context) {
 	var pushJson models.PushJson
 	rawData, err1 := c.GetRawData()
 	if err1 != nil {
 		c.JSON(http.StatusOK, models.ApiResponse{Status: -1, Message: "无法解析JSON"})
+		return
 	}
 	err2 := json.Unmarshal(rawData, &pushJson)
 	if err2 != nil {
 		c.JSON(http.StatusOK, models.ApiResponse{Status: -1, Message: "无法解析JSON"})
+		return
 	}
 
-	conn := db.NewConn()
-
+	var userLogs []models.UserLog
+	logCount := 0
 	uid := pushJson.Uid
 	//deviceId := pushJson.DeviceId
 	for _, userEvent := range pushJson.UserEvents {
 		eventName := userEvent.EventName
 		for _, eventInfo := range userEvent.EventInfos {
-			db.InsertUserLog(&models.UserLog{
+			userLogs = append(userLogs, models.UserLog{
 				Uid:        uid,
 				EventName:  eventName,
 				ActTime:    eventInfo.ActTime,
 				AppendInfo: eventInfo.Append,
-			}, conn)
+			})
+			logCount++
 		}
 	}
-
-	logCount := 0
+	db.InsertUserLogs(&userLogs)
+	db.InsertUserLog(&models.UserLog{
+		Uid:       uid,
+		EventName: "upload",
+		ActTime:   time.Now(),
+	})
 
 	c.JSON(
 		http.StatusOK,
@@ -71,7 +78,6 @@ func RetrieveUserLog(c *gin.Context) {
 	if err1 != nil || err2 != nil {
 		c.JSON(http.StatusOK, models.ApiResponse{Status: -1, Message: "wrong format time, need YYYY-MM-DD"})
 	}
-	conn := db.NewConn()
-	db.GetUserLog(eventName, startTime, endTime, conn)
+	db.GetUserLog(eventName, startTime, endTime)
 	c.JSON(http.StatusOK, models.ApiResponse{Status: 0, Message: "ok", Data: fmt.Sprint(eventName, startTime, endTime)})
 }

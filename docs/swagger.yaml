@@ -10,9 +10,9 @@ definitions:
     type: object
   models.EventInfo:
     properties:
-      append:
+      act_time:
         type: string
-      created_at:
+      append:
         type: string
     type: object
   models.PushJson:
@@ -42,22 +42,16 @@ info:
   title: iwut api go
   version: 0.0.2
 paths:
-  /log/user/create:
-    post:
-      parameters:
-      - description: json
-        in: body
-        name: json
-        required: true
-        schema:
-          $ref: '#/definitions/models.PushJson'
+  /ping:
+    get:
+      description: 连接测试
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/models.ApiResponse'
-      summary: 添加用户日志
-  /log/user/retrieve:
+      summary: ping
+  /user/log/retrieve:
     get:
       parameters:
       - description: 事件名称
@@ -81,36 +75,19 @@ paths:
           schema:
             $ref: '#/definitions/models.ApiResponse'
       summary: 获取用户日志
-  /ping:
-    get:
-      consumes:
-      - application/json
-      description: ping test
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.ApiResponse'
-      summary: ping
-  /user/name:
-    get:
-      consumes:
-      - application/json
-      description: A test for params
+  /user/log/upload:
+    post:
       parameters:
-      - description: userId
-        in: path
-        name: some_id
+      - description: json
+        in: body
+        name: json
         required: true
-        type: integer
-      produces:
-      - application/json
+        schema:
+          $ref: '#/definitions/models.PushJson'
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/models.ApiResponse'
-      summary: GetUser
+      summary: 添加用户日志
 swagger: "2.0"

@@ -24,20 +24,10 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/log/user/create": {
-            "post": {
-                "summary": "添加用户日志",
-                "parameters": [
-                    {
-                        "description": "json",
-                        "name": "json",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.PushJson"
-                        }
-                    }
-                ],
+        "/ping": {
+            "get": {
+                "description": "连接测试",
+                "summary": "ping",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -48,7 +38,7 @@ var doc = `{
                 }
             }
         },
-        "/log/user/retrieve": {
+        "/user/log/retrieve": {
             "get": {
                 "summary": "获取用户日志",
                 "parameters": [
@@ -84,43 +74,18 @@ var doc = `{
                 }
             }
         },
-        "/ping": {
-            "get": {
-                "description": "ping test",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "ping",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.ApiResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/user/name": {
-            "get": {
-                "description": "A test for params",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "summary": "GetUser",
+        "/user/log/upload": {
+            "post": {
+                "summary": "添加用户日志",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "userId",
-                        "name": "some_id",
-                        "in": "path",
-                        "required": true
+                        "description": "json",
+                        "name": "json",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.PushJson"
+                        }
                     }
                 ],
                 "responses": {
@@ -152,10 +117,10 @@ var doc = `{
         "models.EventInfo": {
             "type": "object",
             "properties": {
-                "append": {
+                "act_time": {
                     "type": "string"
                 },
-                "created_at": {
+                "append": {
                     "type": "string"
                 }
             }

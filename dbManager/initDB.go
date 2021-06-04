@@ -9,7 +9,7 @@ import (
 )
 
 //var db *gorm.DB
-var userLog *models.UserLog
+//var userLog *models.UserLog
 
 func InitDB() {
 	fmt.Println("InitDB...")

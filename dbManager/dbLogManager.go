@@ -3,24 +3,31 @@ package dbManager
 import (
 	"fmt"
 	"github.com/saicem/api/models"
-	"gorm.io/gorm"
 	"time"
 )
 
 // InsertUserLog 插入单条用户日志
-func InsertUserLog(userLog *models.UserLog, db *gorm.DB) {
-	fmt.Println("插入用户日志")
+func InsertUserLog(userLog *models.UserLog) {
+	db := NewConn()
 	db.Create(&userLog)
+	fmt.Println("插入单条用户日志")
 }
 
-// todo 插入多条用户日志 并最后添加"添加日志的"日志
+// InsertUserLogs 插入多条用户日志
+func InsertUserLogs(userLogs *[]models.UserLog) {
+	db := NewConn()
+	db.Create(&userLogs)
+	fmt.Println("插入多条用户日志")
+}
 
 // GetUserLog 获取用户日志
-func GetUserLog(eventName string, fromTime time.Time, endTime time.Time, db *gorm.DB) *models.UserLog {
+// todo 还没写
+func GetUserLog(eventName string, fromTime time.Time, endTime time.Time) *models.UserLog {
+	db := NewConn()
 	var userLogs []models.UserLog
 	db.Where("EventName = ? AND CreatedAt >= ? AND CreatedAt <= ?", eventName, fromTime, endTime).Find(&userLogs)
-	for _, log := range userLogs {
-		println(log)
+	for _, userLog := range userLogs {
+		println(fmt.Sprint(userLog))
 	}
 	return nil
 }
