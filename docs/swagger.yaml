@@ -1,0 +1,116 @@
+definitions:
+  models.ApiResponse:
+    properties:
+      data:
+        type: string
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  models.EventInfo:
+    properties:
+      append:
+        type: string
+      created_at:
+        type: string
+    type: object
+  models.PushJson:
+    properties:
+      device_id:
+        type: string
+      uid:
+        type: string
+      user_events:
+        items:
+          $ref: '#/definitions/models.UserEvent'
+        type: array
+    type: object
+  models.UserEvent:
+    properties:
+      event_infos:
+        items:
+          $ref: '#/definitions/models.EventInfo'
+        type: array
+      event_name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: iwut 用户日志记录
+  title: iwut api go
+  version: 0.0.2
+paths:
+  /log/user/create:
+    post:
+      parameters:
+      - description: json
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/models.PushJson'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ApiResponse'
+      summary: 添加用户日志
+  /log/user/retrieve:
+    get:
+      parameters:
+      - description: 事件名称
+        in: query
+        name: name
+        required: true
+        type: string
+      - description: 查询开始时间
+        in: query
+        name: start
+        required: true
+        type: string
+      - description: 查询结束时间
+        in: query
+        name: end
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ApiResponse'
+      summary: 获取用户日志
+  /ping:
+    get:
+      consumes:
+      - application/json
+      description: ping test
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ApiResponse'
+      summary: ping
+  /user/name:
+    get:
+      consumes:
+      - application/json
+      description: A test for params
+      parameters:
+      - description: userId
+        in: path
+        name: some_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ApiResponse'
+      summary: GetUser
+swagger: "2.0"

@@ -1,0 +1,179 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "iwut 用户日志记录",
+        "title": "iwut api go",
+        "contact": {},
+        "version": "0.0.2"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/log/user/create": {
+            "post": {
+                "summary": "添加用户日志",
+                "parameters": [
+                    {
+                        "description": "json",
+                        "name": "json",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.PushJson"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/log/user/retrieve": {
+            "get": {
+                "summary": "获取用户日志",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "事件名称",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询开始时间",
+                        "name": "start",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询结束时间",
+                        "name": "end",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/ping": {
+            "get": {
+                "description": "ping test",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "ping",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/name": {
+            "get": {
+                "description": "A test for params",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "GetUser",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "userId",
+                        "name": "some_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.ApiResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.ApiResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.EventInfo": {
+            "type": "object",
+            "properties": {
+                "append": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.PushJson": {
+            "type": "object",
+            "properties": {
+                "device_id": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "string"
+                },
+                "user_events": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.UserEvent"
+                    }
+                }
+            }
+        },
+        "models.UserEvent": {
+            "type": "object",
+            "properties": {
+                "event_infos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.EventInfo"
+                    }
+                },
+                "event_name": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
