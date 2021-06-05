@@ -25,7 +25,6 @@ func NewConn() *gorm.DB {
 	config := configs.Get()
 	db, err := gorm.Open(mysql.Open(config.MySQL.Log.Dsn), &gorm.Config{})
 	if err != nil {
-		// todo 什么是panic
 		panic("failed to connect dbManager")
 	}
 	fmt.Println("new conn...")
