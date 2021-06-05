@@ -1,12 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "iwut 用户日志记录",
-        "title": "iwut api go",
+        "title": "swagger 接口文档",
         "contact": {},
-        "version": "0.0.2"
+        "version": "2.0"
     },
-    "host": "localhost:8080",
+    "host": "localhost:9101",
     "paths": {
         "/ping": {
             "get": {
@@ -35,14 +34,14 @@
                     },
                     {
                         "type": "string",
-                        "description": "查询开始时间",
+                        "description": "查询开始时间 YYYY-MM-DD",
                         "name": "start",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "查询结束时间",
+                        "description": "查询结束时间 YYYY-MM-DD",
                         "name": "end",
                         "in": "query",
                         "required": true

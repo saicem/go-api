@@ -21,13 +21,9 @@ func InsertUserLogs(userLogs *[]models.UserLog) {
 }
 
 // GetUserLog 获取用户日志
-// todo 还没写
-func GetUserLog(eventName string, fromTime time.Time, endTime time.Time) *models.UserLog {
+func GetUserLog(eventName string, fromTime time.Time, endTime time.Time) []models.UserLog {
 	db := NewConn()
 	var userLogs []models.UserLog
-	db.Where("EventName = ? AND CreatedAt >= ? AND CreatedAt <= ?", eventName, fromTime, endTime).Find(&userLogs)
-	for _, userLog := range userLogs {
-		println(fmt.Sprint(userLog))
-	}
-	return nil
+	db.Where("event_name = ? AND act_time >= ? AND act_time <= ?", eventName, fromTime, endTime).Find(&userLogs)
+	return userLogs
 }

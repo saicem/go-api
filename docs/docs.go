@@ -51,14 +51,14 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "查询开始时间",
+                        "description": "查询开始时间 YYYY-MM-DD",
                         "name": "start",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "查询结束时间",
+                        "description": "查询结束时间 YYYY-MM-DD",
                         "name": "end",
                         "in": "query",
                         "required": true
@@ -170,12 +170,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "0.0.2",
-	Host:        "localhost:8080",
+	Version:     "2.0",
+	Host:        "localhost:9101",
 	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "iwut api go",
-	Description: "iwut 用户日志记录",
+	Title:       "swagger 接口文档",
+	Description: "",
 }
 
 type s struct{}

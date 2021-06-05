@@ -2,8 +2,8 @@ package dbManager
 
 import (
 	"fmt"
+	"github.com/saicem/api/configs"
 	"github.com/saicem/api/models"
-	"github.com/saicem/api/settings"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -22,7 +22,8 @@ func InitDB() {
 }
 
 func NewConn() *gorm.DB {
-	db, err := gorm.Open(mysql.Open(settings.DSN), &gorm.Config{})
+	config := configs.Get()
+	db, err := gorm.Open(mysql.Open(config.MySQL.Log.Dsn), &gorm.Config{})
 	if err != nil {
 		// todo 什么是panic
 		panic("failed to connect dbManager")

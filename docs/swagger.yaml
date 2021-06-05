@@ -35,12 +35,11 @@ definitions:
       event_name:
         type: string
     type: object
-host: localhost:8080
+host: localhost:9101
 info:
   contact: {}
-  description: iwut 用户日志记录
-  title: iwut api go
-  version: 0.0.2
+  title: swagger 接口文档
+  version: "2.0"
 paths:
   /ping:
     get:
@@ -59,12 +58,12 @@ paths:
         name: name
         required: true
         type: string
-      - description: 查询开始时间
+      - description: 查询开始时间 YYYY-MM-DD
         in: query
         name: start
         required: true
         type: string
-      - description: 查询结束时间
+      - description: 查询结束时间 YYYY-MM-DD
         in: query
         name: end
         required: true
