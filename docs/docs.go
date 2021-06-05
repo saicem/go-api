@@ -32,7 +32,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ApiResponse"
+                            "$ref": "#/definitions/api.Response"
                         }
                     }
                 }
@@ -68,7 +68,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ApiResponse"
+                            "$ref": "#/definitions/api.Response"
                         }
                     }
                 }
@@ -92,7 +92,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ApiResponse"
+                            "$ref": "#/definitions/api.Response"
                         }
                     }
                 }
@@ -100,7 +100,7 @@ var doc = `{
         }
     },
     "definitions": {
-        "models.ApiResponse": {
+        "api.Response": {
             "type": "object",
             "properties": {
                 "data": {

@@ -17,7 +17,6 @@ import (
 // @Host localhost:9101
 // @BathPath /
 func main() {
-
 	db.InitDB()
 	initRouter()
 }
@@ -33,4 +32,4 @@ func initRouter() {
 	}
 }
 
-// todo swagger UI 从注释中读取 但有些东西不能写死在注释 得写在配置文件里
+// todo 初始化时建立需要的文件及文件夹 比如 ./logs/iwut-api-gin.log

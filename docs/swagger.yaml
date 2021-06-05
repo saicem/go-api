@@ -1,5 +1,5 @@
 definitions:
-  models.ApiResponse:
+  api.Response:
     properties:
       data:
         type: string
@@ -48,7 +48,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ApiResponse'
+            $ref: '#/definitions/api.Response'
       summary: ping
   /user/log/retrieve:
     get:
@@ -72,7 +72,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ApiResponse'
+            $ref: '#/definitions/api.Response'
       summary: 获取用户日志
   /user/log/upload:
     post:
@@ -87,6 +87,6 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.ApiResponse'
+            $ref: '#/definitions/api.Response'
       summary: 添加用户日志
 swagger: "2.0"

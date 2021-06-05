@@ -15,7 +15,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ApiResponse"
+                            "$ref": "#/definitions/api.Response"
                         }
                     }
                 }
@@ -51,7 +51,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ApiResponse"
+                            "$ref": "#/definitions/api.Response"
                         }
                     }
                 }
@@ -75,7 +75,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.ApiResponse"
+                            "$ref": "#/definitions/api.Response"
                         }
                     }
                 }
@@ -83,7 +83,7 @@
         }
     },
     "definitions": {
-        "models.ApiResponse": {
+        "api.Response": {
             "type": "object",
             "properties": {
                 "data": {

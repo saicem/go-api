@@ -14,7 +14,7 @@ func BasicController(rg *gin.RouterGroup) {
 // @Summary ping
 // @Description 连接测试
 // @Router /ping [get]
-// @Success 200 object models.ApiResponse
+// @Success 200 object api.Response
 func ping(c *gin.Context) {
 	c.JSON(http.StatusOK, api.Response{
 		Status:  0,
