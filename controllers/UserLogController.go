@@ -6,7 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 	db "github.com/saicem/api/dbManager"
 	"github.com/saicem/api/models"
-	"github.com/saicem/api/models/ApiCode"
+	"github.com/saicem/api/models/api"
+	"github.com/saicem/api/models/api/code"
 	"net/http"
 	"time"
 )
@@ -26,12 +27,12 @@ func uploadUserLogs(c *gin.Context) {
 	var pushJson models.PushJson
 	rawData, err1 := c.GetRawData()
 	if err1 != nil {
-		c.JSON(http.StatusOK, models.ApiResponse{Status: ApiCode.ERROR, Message: "无法解析JSON"})
+		c.JSON(http.StatusOK, api.Response{Status: code.ERROR, Message: "无法解析JSON"})
 		return
 	}
 	err2 := json.Unmarshal(rawData, &pushJson)
 	if err2 != nil {
-		c.JSON(http.StatusOK, models.ApiResponse{Status: ApiCode.ERROR, Message: "无法解析JSON"})
+		c.JSON(http.StatusOK, api.Response{Status: code.ERROR, Message: "无法解析JSON"})
 		return
 	}
 
@@ -60,7 +61,7 @@ func uploadUserLogs(c *gin.Context) {
 
 	c.JSON(
 		http.StatusOK,
-		models.ApiResponse{Status: ApiCode.OK, Message: "添加成功", Data: string(logCount)},
+		api.Response{Status: code.OK, Message: "添加成功", Data: string(logCount)},
 	)
 }
 
@@ -77,8 +78,8 @@ func retrieveUserLog(c *gin.Context) {
 	startTime, err1 := time.Parse("2006-01-02", c.Query("start"))
 	endTime, err2 := time.Parse("2006-01-02", c.Query("end"))
 	if err1 != nil || err2 != nil {
-		c.JSON(http.StatusOK, models.ApiResponse{Status: ApiCode.ERROR, Message: "wrong format time, need YYYY-MM-DD"})
+		c.JSON(http.StatusOK, api.Response{Status: code.ERROR, Message: "wrong format time, need YYYY-MM-DD"})
 	}
 	userLogs := db.GetUserLog(eventName, startTime, endTime)
-	c.JSON(http.StatusOK, models.ApiResponse{Status: ApiCode.OK, Message: "ok", Data: fmt.Sprint(userLogs)})
+	c.JSON(http.StatusOK, api.Response{Status: code.OK, Message: "ok", Data: fmt.Sprint(userLogs)})
 }

@@ -1,4 +1,4 @@
-package ApiCode
+package code
 
 type ApiCode int
 
