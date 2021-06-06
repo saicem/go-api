@@ -39,24 +39,32 @@ func uploadUserLogs(c *gin.Context) {
 	var userLogs []models.UserLog
 	logCount := 0
 	uid := pushJson.Uid
-	//deviceId := pushJson.DeviceId
-	for _, userEvent := range pushJson.UserEvents {
-		eventName := userEvent.EventName
-		for _, eventInfo := range userEvent.EventInfos {
-			userLogs = append(userLogs, models.UserLog{
-				Uid:        uid,
-				EventName:  eventName,
-				ActTime:    eventInfo.ActTime,
-				AppendInfo: eventInfo.Append,
-			})
-			logCount++
+	deviceId := pushJson.DeviceId
+	for _, userObject := range pushJson.UserObjects {
+		objectName := userObject.ObjectName
+		userEvents := userObject.UserEvents
+		for _, userEvent := range userEvents {
+			eventName := userEvent.EventName
+			eventInfos := userEvent.EventInfos
+			for _, eventInfo := range eventInfos {
+				userLogs = append(userLogs, models.UserLog{
+					Uid:        uid,
+					ObjectName: objectName,
+					EventName:  eventName,
+					ActTime:    eventInfo.ActTime,
+					AppendInfo: eventInfo.Append,
+				})
+				logCount++
+			}
 		}
 	}
 	db.InsertUserLogs(&userLogs)
 	db.InsertUserLog(&models.UserLog{
-		Uid:       uid,
-		EventName: "upload",
-		ActTime:   time.Now(),
+		Uid:        uid,
+		ObjectName: "system",
+		EventName:  "upload",
+		ActTime:    time.Now(),
+		AppendInfo: deviceId,
 	})
 
 	c.JSON(

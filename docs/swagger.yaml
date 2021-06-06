@@ -21,9 +21,9 @@ definitions:
         type: string
       uid:
         type: string
-      user_events:
+      user_objects:
         items:
-          $ref: '#/definitions/models.UserEvent'
+          $ref: '#/definitions/models.UserObject'
         type: array
     type: object
   models.UserEvent:
@@ -34,6 +34,15 @@ definitions:
         type: array
       event_name:
         type: string
+    type: object
+  models.UserObject:
+    properties:
+      object_name:
+        type: string
+      user_events:
+        items:
+          $ref: '#/definitions/models.UserEvent'
+        type: array
     type: object
 host: localhost:9101
 info:

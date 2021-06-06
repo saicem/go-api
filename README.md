@@ -16,3 +16,21 @@
 
 - 2000-10-10T12:12:12Z
 - 2000-10-10T12:12:12+08:00
+
+#### 事件
+
+| 对象        | 事件     | 附加信息                                |
+| ----------- | -------- | --------------------------------------- |
+| Application | StartUp  |                                         |
+|             | Exit     |                                         |
+| Course      | Import   |                                         |
+|             | Clear    |                                         |
+|             | Add      |                                         |
+|             | Remove   |                                         |
+|             | BgChange |                                         |
+|             | BgClear  |                                         |
+| Room        | Query    | Week,Day,SectionStart,SectionEnd,Region |
+| Library     | Query    | Keyword,SearchWay                       |
+|             | Detail   | Id                                      |
+| News        | Detail   | Id                                      |
+|             | Query    | Tag                                     |

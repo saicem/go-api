@@ -1,12 +1,15 @@
 package models
 
-import (
-	"time"
-)
+import "time"
 
 type PushJson struct {
-	Uid        string      `json:"uid"`
-	DeviceId   string      `json:"device_id"`
+	Uid         string       `json:"uid"`
+	DeviceId    string       `json:"device_id"`
+	UserObjects []UserObject `json:"user_objects"`
+}
+
+type UserObject struct {
+	ObjectName string      `json:"object_name"`
 	UserEvents []UserEvent `json:"user_events"`
 }
 

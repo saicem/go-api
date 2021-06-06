@@ -134,10 +134,10 @@ var doc = `{
                 "uid": {
                     "type": "string"
                 },
-                "user_events": {
+                "user_objects": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.UserEvent"
+                        "$ref": "#/definitions/models.UserObject"
                     }
                 }
             }
@@ -153,6 +153,20 @@ var doc = `{
                 },
                 "event_name": {
                     "type": "string"
+                }
+            }
+        },
+        "models.UserObject": {
+            "type": "object",
+            "properties": {
+                "object_name": {
+                    "type": "string"
+                },
+                "user_events": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.UserEvent"
+                    }
                 }
             }
         }
