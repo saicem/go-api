@@ -24,7 +24,5 @@ func initRouter() {
 	err := r.Run(":" + configs.ProjectPort)
 	if err != nil {
 		log.Println(err)
-	} else {
-		log.Printf("Listening on port localhost:%s\n", configs.ProjectPort)
 	}
 }

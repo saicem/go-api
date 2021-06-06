@@ -104,7 +104,7 @@ var doc = `{
             "type": "object",
             "properties": {
                 "data": {
-                    "type": "string"
+                    "type": "object"
                 },
                 "message": {
                     "type": "string"

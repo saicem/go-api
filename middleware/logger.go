@@ -25,7 +25,7 @@ func LoggerToFile() gin.HandlerFunc {
 	// 设置日志级别
 	logger.SetLevel(logrus.DebugLevel)
 
-	logger.SetFormatter(&logrus.JSONFormatter{
+	logger.SetFormatter(&logrus.TextFormatter{
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
 
@@ -56,7 +56,7 @@ func LoggerToFile() gin.HandlerFunc {
 		logrus.PanicLevel: logWriter,
 	}
 	//
-	lfHook := lfshook.NewHook(writeMap, &logrus.JSONFormatter{
+	lfHook := lfshook.NewHook(writeMap, &logrus.TextFormatter{
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
 
