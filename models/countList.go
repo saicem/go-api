@@ -43,5 +43,6 @@ func (c *CountList) Compute(lowerBound int) int {
 			res++
 		}
 	}
+
 	return res
 }

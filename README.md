@@ -2,6 +2,10 @@
 
 ## 部署
 
+### swagger
+
+在项目根目录下运行 `swag init` 生成 swagger 必要文件
+
 #### 建立数据库
 
 - 数据库名 iwut_log
