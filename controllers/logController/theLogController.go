@@ -1,4 +1,4 @@
-package controllers
+package logController
 
 import (
 	"encoding/json"
@@ -15,6 +15,7 @@ import (
 func UserLogController(rg *gin.RouterGroup) {
 	rg.GET("/retrieve", retrieveUserLog)
 	rg.POST("/upload", uploadUserLogs)
+	rg.GET("/query/active", queryActiveUser)
 }
 
 // uploadUserLogs 添加用户日志
@@ -69,23 +70,25 @@ func uploadUserLogs(c *gin.Context) {
 
 	c.JSON(
 		http.StatusOK,
-		api.Response{Status: code.OK, Message: "添加成功", Data: string(rune(logCount))},
+		api.Response{Status: code.OK, Message: "添加成功", Data: logCount},
 	)
 }
 
 // retrieveUserLog 获取用户日志
 // @Summary 获取用户日志
 // @Description
-// @Param name query string true "事件名称"
-// @Param start query string true "查询开始时间 YYYY-MM-DD"
-// @Param end query string true "查询结束时间 YYYY-MM-DD"
+// @Param object_name query string true "对象名称"
+// @Param event_name query string true "事件名称"
+// @Param start_time query string true "查询开始时间 YYYY-MM-DD"
+// @Param end_time query string true "查询结束时间 YYYY-MM-DD"
 // @Router /user/log/retrieve [get]
 // @Success 200 object api.Response
 func retrieveUserLog(c *gin.Context) {
 	// 获取参数
-	eventName := c.Query("name")
-	startTimeStr := c.Query("start")
-	endTimeStr := c.Query("end")
+	objectName := c.Query("object_name")
+	eventName := c.Query("event_name")
+	startTimeStr := c.Query("start_time")
+	endTimeStr := c.Query("end_time")
 	// 获取北京时区
 	secondsEastOfUTC := int((8 * time.Hour).Seconds())
 	beijing := time.FixedZone("Beijing Time", secondsEastOfUTC)
@@ -97,6 +100,6 @@ func retrieveUserLog(c *gin.Context) {
 	}
 	// 获取数据
 	// todo 对每个功能单独写查询
-	userLogs := db.GetUserLog(eventName, startTime, endTime)
+	userLogs := db.GetUserLog(objectName, eventName, startTime, endTime)
 	c.JSON(http.StatusOK, api.Response{Status: code.OK, Message: "ok", Data: fmt.Sprint(userLogs)})
 }

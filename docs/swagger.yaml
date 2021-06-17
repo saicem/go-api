@@ -59,22 +59,69 @@ paths:
           schema:
             $ref: '#/definitions/api.Response'
       summary: ping
-  /user/log/retrieve:
+  /user/log/query/active:
     get:
+      description: |-
+        查询 start_time 到 end_time 范围 total_day_span 内有 active_day_span 天活跃的每日数据
+        计算方式为 计算 前 total_day_span 天内有 active_day_span 天有活跃记录 视为活跃
       parameters:
+      - description: 对象名称
+        in: query
+        name: object_name
+        required: true
+        type: string
       - description: 事件名称
         in: query
-        name: name
+        name: event_name
         required: true
         type: string
       - description: 查询开始时间 YYYY-MM-DD
         in: query
-        name: start
+        name: start_time
         required: true
         type: string
       - description: 查询结束时间 YYYY-MM-DD
         in: query
-        name: end
+        name: end_time
+        required: true
+        type: string
+      - description: 查询天数范围
+        in: query
+        name: total_day_span
+        required: true
+        type: integer
+      - description: 活跃天数（需小于查询天数）
+        in: query
+        name: active_day_span
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.Response'
+      summary: 获取活跃（留存）用户数量
+  /user/log/retrieve:
+    get:
+      parameters:
+      - description: 对象名称
+        in: query
+        name: object_name
+        required: true
+        type: string
+      - description: 事件名称
+        in: query
+        name: event_name
+        required: true
+        type: string
+      - description: 查询开始时间 YYYY-MM-DD
+        in: query
+        name: start_time
+        required: true
+        type: string
+      - description: 查询结束时间 YYYY-MM-DD
+        in: query
+        name: end_time
         required: true
         type: string
       responses:

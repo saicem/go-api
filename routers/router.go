@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/saicem/api/configs"
 	"github.com/saicem/api/controllers"
+	"github.com/saicem/api/controllers/logController"
 	"github.com/saicem/api/middleware"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -18,7 +19,7 @@ func SetupRouter() *gin.Engine {
 
 	controllers.BasicController(r.Group(""))
 
-	controllers.UserLogController(r.Group("/user/log"))
+	logController.UserLogController(r.Group("/user/log"))
 
 	return r
 }

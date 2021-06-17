@@ -38,28 +38,93 @@ var doc = `{
                 }
             }
         },
-        "/user/log/retrieve": {
+        "/user/log/query/active": {
             "get": {
-                "summary": "获取用户日志",
+                "description": "查询 start_time 到 end_time 范围 total_day_span 内有 active_day_span 天活跃的每日数据\n计算方式为 计算 前 total_day_span 天内有 active_day_span 天有活跃记录 视为活跃",
+                "summary": "获取活跃（留存）用户数量",
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "对象名称",
+                        "name": "object_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "事件名称",
-                        "name": "name",
+                        "name": "event_name",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "查询开始时间 YYYY-MM-DD",
-                        "name": "start",
+                        "name": "start_time",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
                         "description": "查询结束时间 YYYY-MM-DD",
-                        "name": "end",
+                        "name": "end_time",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "查询天数范围",
+                        "name": "total_day_span",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "活跃天数（需小于查询天数）",
+                        "name": "active_day_span",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/api.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/log/retrieve": {
+            "get": {
+                "summary": "获取用户日志",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "对象名称",
+                        "name": "object_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "事件名称",
+                        "name": "event_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询开始时间 YYYY-MM-DD",
+                        "name": "start_time",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "查询结束时间 YYYY-MM-DD",
+                        "name": "end_time",
                         "in": "query",
                         "required": true
                     }
