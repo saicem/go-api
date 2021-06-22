@@ -1,4 +1,4 @@
-package code
+package response
 
 type ApiCode int
 

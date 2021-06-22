@@ -1,12 +1,11 @@
-package loginController
+package v1
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gomodule/redigo/redis"
-	"github.com/saicem/api/models/api"
-	"github.com/saicem/api/models/api/code"
-	mysql "github.com/saicem/api/widgets/mysql-server"
-	redisServer "github.com/saicem/api/widgets/redis-server"
+	"github.com/saicem/api/models/response"
+	mysql "github.com/saicem/api/widgets/mysql_server"
+	redisServer "github.com/saicem/api/widgets/redis_server"
 	"math/rand"
 	"net/http"
 	"time"
@@ -44,9 +43,9 @@ func adminLogin(c *gin.Context) {
 				panic("关不掉？？")
 			}
 		}(r)
-		c.JSON(http.StatusOK, api.Response{Status: code.OK, Message: "登录成功"})
+		c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "登录成功"})
 	} else {
-		c.JSON(http.StatusOK, api.Response{Status: code.ERROR, Message: "未通过验证"})
+		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "未通过验证"})
 	}
 }
 

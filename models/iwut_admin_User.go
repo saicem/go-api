@@ -1,4 +1,4 @@
-package iwut
+package models
 
 type AdminUser struct {
 	Id       uint   `json:"id" gorm:"primaryKey"`

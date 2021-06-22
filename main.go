@@ -1,11 +1,12 @@
 package main
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/saicem/api/configs"
 	_ "github.com/saicem/api/docs"
-	router "github.com/saicem/api/routers"
-	mysql "github.com/saicem/api/widgets/mysql-server"
-	redis "github.com/saicem/api/widgets/redis-server"
+	"github.com/saicem/api/router"
+	mysql "github.com/saicem/api/widgets/mysql_server"
+	redis "github.com/saicem/api/widgets/redis_server"
 	"log"
 )
 
@@ -18,12 +19,10 @@ import (
 func main() {
 	mysql.InitMySQL()
 	redis.InitRedis()
-	initRouter()
-}
-
-func initRouter() {
-	r := router.SetupRouter()
-	err := r.Run(":" + configs.ProjectPort)
+	//gin.SetMode(gin.ReleaseMode)
+	engine := gin.New()
+	router.InitRouter(engine)
+	err := engine.Run(":" + configs.ProjectPort)
 	if err != nil {
 		log.Println(err)
 	}
