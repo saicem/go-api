@@ -3,9 +3,10 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gomodule/redigo/redis"
+	"github.com/saicem/api/global"
+	"github.com/saicem/api/initialize"
+	"github.com/saicem/api/models"
 	"github.com/saicem/api/models/response"
-	mysql "github.com/saicem/api/widgets/mysql_server"
-	redisServer "github.com/saicem/api/widgets/redis_server"
 	"math/rand"
 	"net/http"
 	"time"
@@ -26,14 +27,14 @@ func adminLogin(c *gin.Context) {
 	// 获取参数
 	userName := c.Query("username")
 	password := c.Query("password")
-	if isValid := mysql.SearchAdminUser(userName, password); isValid {
+	if isValid := SearchAdminUser(userName, password); isValid {
 		// todo 其他 sessionId 策略
 		// todo 参数待确定 & 加入 config
 		sessionId := RandString(50)
 		maxAge := 60 * 10
 		domain := "localhost"
 		c.SetCookie("SESSIONID", sessionId, maxAge, "/", domain, false, true)
-		r := redisServer.Get()
+		r := initialize.GetRedis()
 		if _, err := r.Do("SET", sessionId, 1, "EX", maxAge); err != nil {
 			panic("发送不了？？")
 		}
@@ -47,6 +48,14 @@ func adminLogin(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "未通过验证"})
 	}
+}
+
+func SearchAdminUser(userName string, password string) bool {
+	var admin models.AdminUser
+	if res := global.Mysql.Where("user_name = ? AND password = ?", userName, password).First(&admin); res.Error != nil {
+		return false
+	}
+	return true
 }
 
 func RandString(length int) string {

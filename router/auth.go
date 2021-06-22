@@ -2,8 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	redis2 "github.com/gomodule/redigo/redis"
-	redis "github.com/saicem/api/widgets/redis_server"
+	"github.com/gomodule/redigo/redis"
+	"github.com/saicem/api/initialize"
 	"net/http"
 )
 
@@ -22,8 +22,8 @@ func Authentication(c *gin.Context) {
 func SearchSession(sessionId string) bool {
 	// todo 不能整个redis全给存这个 需要优化存储策略
 
-	r := redis.Get()
-	defer func(r redis2.Conn) {
+	r := initialize.GetRedis()
+	defer func(r redis.Conn) {
 		err := r.Close()
 		if err != nil {
 			panic("关不掉？？")

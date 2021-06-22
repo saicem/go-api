@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/saicem/api/global"
 	"github.com/saicem/api/models"
 	"github.com/saicem/api/models/request"
 	"github.com/saicem/api/models/response"
-	"github.com/saicem/api/widgets/mysql_server"
 	"net/http"
 	"strconv"
 	"time"
@@ -60,8 +60,8 @@ func uploadUserLogs(c *gin.Context) {
 			}
 		}
 	}
-	mysql_server.InsertUserLogs(&userLogs)
-	mysql_server.InsertUserLog(&models.UserLog{
+	InsertUserLogs(&userLogs)
+	InsertUserLog(&models.UserLog{
 		Uid:        uid,
 		ObjectName: "system",
 		EventName:  "upload",
@@ -100,7 +100,7 @@ func retrieveUserLog(c *gin.Context) {
 		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "wrong format time, need YYYY-MM-DD"})
 	}
 	// 获取数据
-	userLogs := mysql_server.GetUserLog(objectName, eventName, startTime, endTime)
+	userLogs := GetUserLog(objectName, eventName, startTime, endTime)
 	c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "ok", Data: fmt.Sprint(userLogs)})
 }
 
@@ -141,7 +141,7 @@ func queryActiveUser(c *gin.Context) {
 		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "参数无效"})
 	} else {
 		// 获取事件
-		queryResult := mysql_server.GetUserLogByDay(objectName, eventName, startTime.AddDate(0, 0, -totalDaySpan), endTime)
+		queryResult := GetUserLogByDay(objectName, eventName, startTime.AddDate(0, 0, -totalDaySpan), endTime)
 		res := compute(queryResult, totalDaySpan, activeDaySpan)
 		c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "成功获取", Data: res})
 	}
@@ -186,4 +186,29 @@ func compute(ids []models.UserLogByDay, totalDaySpan int, activeDaySpan int) *ma
 	}
 	res[pre.AddDate(0, 0, 1)] = countLs.Compute(activeDaySpan)
 	return &res
+}
+
+// InsertUserLog 插入单条用户日志
+func InsertUserLog(userLog *models.UserLog) {
+	global.Mysql.Create(&userLog)
+}
+
+// InsertUserLogs 插入多条用户日志
+func InsertUserLogs(userLogs *[]models.UserLog) {
+	global.Mysql.Create(&userLogs)
+}
+
+// GetUserLog 获取用户日志
+func GetUserLog(objectName string, eventName string, startTime time.Time, endTime time.Time) []models.UserLog {
+	var userLogs []models.UserLog
+	global.Mysql.Where("object_name = ? AND event_name = ? AND act_time >= ? AND act_time <= ?", objectName, eventName, startTime, endTime).Find(&userLogs)
+	return userLogs
+}
+
+func GetUserLogByDay(objectName string, eventName string, startTime time.Time, endTime time.Time) []models.UserLogByDay {
+	var result []models.UserLogByDay
+	rawSql := "SELECT DISTINCT uid, cast(act_time AS date) as act_day FROM user_logs " +
+		"WHERE object_name = ? AND event_name = ? AND act_time >= ? AND act_time <= ?"
+	global.Mysql.Raw(rawSql, objectName, eventName, startTime, endTime).Scan(&result)
+	return result
 }

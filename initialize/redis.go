@@ -1,16 +1,15 @@
-package redis_server
+package initialize
 
 import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/saicem/api/configs"
+	"github.com/saicem/api/global"
 )
 
-var pool *redis.Pool
-
-func InitRedis() {
-	// todo redis 未能连接的处理
+func Redis() {
+	// todo redis 验证是否成功连接 redis
 	config := configs.Get()
-	pool = &redis.Pool{
+	global.Redis = &redis.Pool{
 		MaxIdle:   3, /*最大的空闲连接数*/
 		MaxActive: 8, /*最大的激活连接数*/
 		Dial: func() (redis.Conn, error) {
@@ -24,6 +23,6 @@ func InitRedis() {
 	}
 }
 
-func Get() redis.Conn {
-	return pool.Get()
+func GetRedis() redis.Conn {
+	return global.Redis.Get()
 }
