@@ -7,6 +7,7 @@ import (
 	"github.com/saicem/api/models"
 	"github.com/saicem/api/models/api"
 	"github.com/saicem/api/models/api/code"
+	"github.com/saicem/api/models/iwut"
 	"github.com/saicem/api/widgets/mysql-server"
 	"net/http"
 	"time"
@@ -37,7 +38,7 @@ func uploadUserLogs(c *gin.Context) {
 		return
 	}
 
-	var userLogs []models.UserLog
+	var userLogs []iwut.UserLog
 	logCount := 0
 	uid := pushJson.Uid
 	deviceId := pushJson.DeviceId
@@ -48,7 +49,7 @@ func uploadUserLogs(c *gin.Context) {
 			eventName := userEvent.EventName
 			eventInfos := userEvent.EventInfos
 			for _, eventInfo := range eventInfos {
-				userLogs = append(userLogs, models.UserLog{
+				userLogs = append(userLogs, iwut.UserLog{
 					Uid:        uid,
 					ObjectName: objectName,
 					EventName:  eventName,
@@ -60,7 +61,7 @@ func uploadUserLogs(c *gin.Context) {
 		}
 	}
 	mysql_server.InsertUserLogs(&userLogs)
-	mysql_server.InsertUserLog(&models.UserLog{
+	mysql_server.InsertUserLog(&iwut.UserLog{
 		Uid:        uid,
 		ObjectName: "system",
 		EventName:  "upload",

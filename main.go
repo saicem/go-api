@@ -2,9 +2,10 @@ package main
 
 import (
 	"github.com/saicem/api/configs"
-	db "github.com/saicem/api/dbManager"
 	_ "github.com/saicem/api/docs"
 	router "github.com/saicem/api/routers"
+	mysql "github.com/saicem/api/widgets/mysql-server"
+	redis "github.com/saicem/api/widgets/redis-server"
 	"log"
 )
 
@@ -15,7 +16,8 @@ import (
 // @Host localhost:9101
 // @BathPath /
 func main() {
-	db.InitDB()
+	mysql.InitMySQL()
+	redis.InitRedis()
 	initRouter()
 }
 
@@ -26,3 +28,6 @@ func initRouter() {
 		log.Println(err)
 	}
 }
+
+// todo redis 多账户？？
+// todo 统一 api 参数

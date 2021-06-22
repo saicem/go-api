@@ -22,7 +22,11 @@ type Config struct {
 			MaxIdleConn     int           `toml:"maxIdleConn"`
 			ConnMaxLifeTime time.Duration `toml:"connMaxLifeTime"`
 		} `toml:"base"`
-	} `toml:"mysql"`
+	} `toml:"iwut-server"`
+
+	Redis struct {
+		Addr string `toml:"addr"`
+	} `toml:"redis"`
 }
 
 func init() {

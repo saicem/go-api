@@ -1,4 +1,4 @@
-package models
+package iwut
 
 import (
 	"time"
