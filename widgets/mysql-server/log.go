@@ -1,4 +1,4 @@
-package dbManager
+package mysql_server
 
 import (
 	"github.com/saicem/api/models"

@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	db "github.com/saicem/api/dbManager"
 	"github.com/saicem/api/models"
 	"github.com/saicem/api/models/api"
 	"github.com/saicem/api/models/api/code"
+	"github.com/saicem/api/widgets/mysql-server"
 	"net/http"
 	"time"
 )
@@ -59,8 +59,8 @@ func uploadUserLogs(c *gin.Context) {
 			}
 		}
 	}
-	db.InsertUserLogs(&userLogs)
-	db.InsertUserLog(&models.UserLog{
+	mysql_server.InsertUserLogs(&userLogs)
+	mysql_server.InsertUserLog(&models.UserLog{
 		Uid:        uid,
 		ObjectName: "system",
 		EventName:  "upload",
@@ -99,7 +99,6 @@ func retrieveUserLog(c *gin.Context) {
 		c.JSON(http.StatusOK, api.Response{Status: code.ERROR, Message: "wrong format time, need YYYY-MM-DD"})
 	}
 	// 获取数据
-	// todo 对每个功能单独写查询
-	userLogs := db.GetUserLog(objectName, eventName, startTime, endTime)
+	userLogs := mysql_server.GetUserLog(objectName, eventName, startTime, endTime)
 	c.JSON(http.StatusOK, api.Response{Status: code.OK, Message: "ok", Data: fmt.Sprint(userLogs)})
 }

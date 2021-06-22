@@ -2,10 +2,10 @@ package logController
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/saicem/api/dbManager"
 	"github.com/saicem/api/models"
 	"github.com/saicem/api/models/api"
 	"github.com/saicem/api/models/api/code"
+	mysql2 "github.com/saicem/api/widgets/mysql-server"
 	"net/http"
 	"strconv"
 	"time"
@@ -48,7 +48,7 @@ func queryActiveUser(c *gin.Context) {
 		c.JSON(http.StatusOK, api.Response{Status: code.ERROR, Message: "参数无效"})
 	} else {
 		// 获取事件
-		queryResult := dbManager.GetUserLogByDay(objectName, eventName, startTime.AddDate(0, 0, -totalDaySpan), endTime)
+		queryResult := mysql2.GetUserLogByDay(objectName, eventName, startTime.AddDate(0, 0, -totalDaySpan), endTime)
 		res := compute(queryResult, totalDaySpan, activeDaySpan)
 		c.JSON(http.StatusOK, api.Response{Status: code.OK, Message: "成功获取", Data: res})
 	}

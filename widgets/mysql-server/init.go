@@ -1,4 +1,4 @@
-package dbManager
+package mysql_server
 
 import (
 	"fmt"
@@ -12,8 +12,8 @@ var db *gorm.DB
 
 //var userLog *models.UserLog
 
-func InitDB() {
-	fmt.Println("InitDB...")
+func InitMySQL() {
+	fmt.Println("InitMySQL...")
 	NewConn()
 	// 迁移 schema
 	err := db.AutoMigrate(&models.UserLog{})
@@ -27,7 +27,7 @@ func NewConn() {
 	var err error
 	db, err = gorm.Open(mysql.Open(config.MySQL.Log.Dsn), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect dbManager")
+		panic("failed to connect mysql-server")
 	}
 	fmt.Println("new conn...")
 }
