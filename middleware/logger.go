@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/rifflock/lfshook"
-	"github.com/saicem/api/configs"
+	"github.com/saicem/api/config"
 	"github.com/sirupsen/logrus"
 	"path"
 	"time"
@@ -13,8 +13,8 @@ import (
 // LoggerToFile 日志记录到文件
 func LoggerToFile() gin.HandlerFunc {
 
-	logFilePath := configs.LogFilePath
-	logFileName := configs.LogFileName
+	logFilePath := config.LogFilePath
+	logFileName := config.LogFileName
 
 	// 日志文件
 	fileName := path.Join(logFilePath, logFileName)

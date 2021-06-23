@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gomodule/redigo/redis"
 	"github.com/saicem/api/global"
-	"github.com/saicem/api/initialize"
 	"github.com/saicem/api/models"
 	"github.com/saicem/api/models/response"
 	"math/rand"
@@ -27,14 +26,14 @@ func adminLogin(c *gin.Context) {
 	// 获取参数
 	userName := c.Query("username")
 	password := c.Query("password")
-	if isValid := SearchAdminUser(userName, password); isValid {
-		// todo 其他 sessionId 策略
-		// todo 参数待确定 & 加入 config
+	if isValid := SearchAdminUser(userName, password); !isValid {
+		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "未通过验证"})
+	} else {
 		sessionId := RandString(50)
-		maxAge := 60 * 10
-		domain := "localhost"
+		maxAge := global.Config.Session.MaxAge
+		domain := global.Config.Session.Domain
 		c.SetCookie("SESSIONID", sessionId, maxAge, "/", domain, false, true)
-		r := initialize.GetRedis()
+		r := global.Redis.Get()
 		if _, err := r.Do("SET", sessionId, 1, "EX", maxAge); err != nil {
 			panic("发送不了？？")
 		}
@@ -45,8 +44,6 @@ func adminLogin(c *gin.Context) {
 			}
 		}(r)
 		c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "登录成功"})
-	} else {
-		c.JSON(http.StatusOK, response.Response{Status: response.ERROR, Message: "未通过验证"})
 	}
 }
 

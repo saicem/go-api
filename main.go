@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/saicem/api/configs"
+	"github.com/saicem/api/config"
 	_ "github.com/saicem/api/docs"
 	"github.com/saicem/api/initialize"
 	"github.com/saicem/api/router"
@@ -21,7 +21,7 @@ func main() {
 	//gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
 	router.InitRouter(engine)
-	err := engine.Run(":" + configs.ProjectPort)
+	err := engine.Run(":" + config.ProjectPort)
 	if err != nil {
 		log.Println(err)
 	}

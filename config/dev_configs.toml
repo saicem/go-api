@@ -1,0 +1,16 @@
+[mysql]
+addr = "127.0.0.1:3306"
+name = "iwut_log"
+pass = "129028"
+user = "iwut"
+config = "charset=utf8mb4&parseTime=True&loc=Local"
+connmaxlifetime = 60
+maxidleconn = 60
+maxopenconn = 10
+
+[redis]
+addr = "127.0.0.1:6379"
+
+[session]
+max_age = 600
+domain = "localhost"

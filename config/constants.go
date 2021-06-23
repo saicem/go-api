@@ -1,4 +1,4 @@
-package configs
+package config
 
 const (
 	//ProjectVersion = "v0.0.3"
