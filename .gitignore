@@ -1,4 +1,4 @@
-/logs
-/docs
-/.idea
+logs
+docs
+.idea
 *_test.go
