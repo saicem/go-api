@@ -6,9 +6,11 @@ import (
 	"gorm.io/gorm"
 )
 
-var Redis *redis.Pool
-var Mysql *gorm.DB
-var Config *config.Config
+var (
+	Redis  *redis.Pool
+	Mysql  *gorm.DB
+	Config *config.Config
+)
 
 func init() {
 	Config = config.Get()

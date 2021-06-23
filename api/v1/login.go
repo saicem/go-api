@@ -11,18 +11,14 @@ import (
 	"time"
 )
 
-func LoginController(rg *gin.RouterGroup) {
-	rg.GET("/", adminLogin)
-}
-
-// adminLogin 管理员登录
+// AdminLogin 管理员登录
 // @Summary 管理员登录
 // @Description
 // @Param username query string true "用户名"
 // @Param password query string true "密码"
 // @Router /login/ [get]
 // @Success 200 object api.Response
-func adminLogin(c *gin.Context) {
+func AdminLogin(c *gin.Context) {
 	// 获取参数
 	userName := c.Query("username")
 	password := c.Query("password")

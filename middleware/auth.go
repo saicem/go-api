@@ -1,9 +1,9 @@
-package router
+package middleware
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gomodule/redigo/redis"
-	"github.com/saicem/api/initialize"
+	"github.com/saicem/api/global"
 	"net/http"
 )
 
@@ -22,7 +22,7 @@ func Authentication(c *gin.Context) {
 func SearchSession(sessionId string) bool {
 	// todo 不能整个redis全给存这个 需要优化存储策略
 
-	r := initialize.GetRedis()
+	r := global.Redis.Get()
 	defer func(r redis.Conn) {
 		err := r.Close()
 		if err != nil {

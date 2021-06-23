@@ -13,19 +13,13 @@ import (
 	"time"
 )
 
-func UserLogController(rg *gin.RouterGroup) {
-	rg.GET("/retrieve", retrieveUserLog)
-	rg.POST("/upload", uploadUserLogs)
-	rg.GET("/query/active", queryActiveUser)
-}
-
-// uploadUserLogs 添加用户日志
+// UploadUserLogs 添加用户日志
 // @Summary 添加用户日志
 // @Description
 // @Param json body models.PushJson true "json"
 // @Router /user/log/upload [post]
 // @Success 200 object api.Response
-func uploadUserLogs(c *gin.Context) {
+func UploadUserLogs(c *gin.Context) {
 	var pushJson request.PushJson
 	rawData, err1 := c.GetRawData()
 	if err1 != nil {
@@ -75,7 +69,7 @@ func uploadUserLogs(c *gin.Context) {
 	)
 }
 
-// retrieveUserLog 获取用户日志
+// RetrieveUserLog 获取用户日志
 // @Summary 获取用户日志
 // @Description
 // @Param object_name query string true "对象名称"
@@ -84,7 +78,7 @@ func uploadUserLogs(c *gin.Context) {
 // @Param end_time query string true "查询结束时间 YYYY-MM-DD"
 // @Router /user/log/retrieve [get]
 // @Success 200 object api.Response
-func retrieveUserLog(c *gin.Context) {
+func RetrieveUserLog(c *gin.Context) {
 	// 获取参数
 	objectName := c.Query("object_name")
 	eventName := c.Query("event_name")
@@ -104,7 +98,7 @@ func retrieveUserLog(c *gin.Context) {
 	c.JSON(http.StatusOK, response.Response{Status: response.OK, Message: "ok", Data: fmt.Sprint(userLogs)})
 }
 
-// queryActiveUser 获取活跃（留存）用户数量
+// QueryActiveUser 获取活跃（留存）用户数量
 // @Summary 获取活跃（留存）用户数量
 // @Description 查询 start_time 到 end_time 范围 total_day_span 内有 active_day_span 天活跃的每日数据
 // @Description 计算方式为 计算 前 total_day_span 天内有 active_day_span 天有活跃记录 视为活跃
@@ -116,7 +110,7 @@ func retrieveUserLog(c *gin.Context) {
 // @Param active_day_span query uint true "活跃天数（需小于查询天数）"
 // @Router /user/log/query/active [get]
 // @Success 200 object api.Response
-func queryActiveUser(c *gin.Context) {
+func QueryActiveUser(c *gin.Context) {
 	// 获取参数
 	objectName := c.Query("object_name")
 	eventName := c.Query("event_name")

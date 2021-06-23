@@ -1,11 +1,9 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/saicem/api/config"
 	_ "github.com/saicem/api/docs"
 	"github.com/saicem/api/initialize"
-	"github.com/saicem/api/router"
 	"log"
 )
 
@@ -18,9 +16,7 @@ import (
 func main() {
 	initialize.InitMySQL()
 	initialize.Redis()
-	//gin.SetMode(gin.ReleaseMode)
-	engine := gin.New()
-	router.InitRouter(engine)
+	engine := initialize.Routers()
 	err := engine.Run(":" + config.ProjectPort)
 	if err != nil {
 		log.Println(err)
@@ -28,4 +24,3 @@ func main() {
 }
 
 // todo redis 多账户？？
-// todo 统一 api 参数
